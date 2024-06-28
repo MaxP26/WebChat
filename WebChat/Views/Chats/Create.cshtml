@@ -1,0 +1,16 @@
+﻿@model TChat
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>New chat</h1>
+<form action="/Chats/Create" method="post">
+    @Html.ValidationSummary()
+    <div class="input-group">
+        @Html.LabelFor(m=>m.Title,"Chat title:");
+        @Html.TextBoxFor(m=>m.Title);  
+    </div>  
+    <input type="hidden" value="@User.FindFirstValue(ClaimTypes.NameIdentifier)" asp-for="OwnerId"/>
+    <button type="submit">Create</button>
+</form>

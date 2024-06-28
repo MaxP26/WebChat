@@ -1,0 +1,24 @@
+﻿@model IEnumerable<ChatViewModel>
+
+@{
+    ViewData["Title"] = "Chats";
+}
+<div class="d-grid gap-2">
+    @foreach(var item in Model)
+    {
+            <a class="btn btn-outline-secondary btn-block" href="/Chats/Chat/@item.ChatId">
+                @item.Title
+            </a>
+    }
+</div>
+<div class="m-2">
+    <label for="chatIdJoin">Join chat:</label>
+    <input id="chatIdJoin" oninput="chatIdChange()" type="text" placeholder="Chat ID" name="id"/>
+    <a id="joinButton" class="btn btn-secondary">Join</a>
+</div>
+<a class="btn btn-primary" asp-action="Create">New Chat</a>
+<script>
+    function chatIdChange(){
+        document.getElementById("joinButton").setAttribute('href','Join/'+document.getElementById("chatIdJoin").value)
+    }
+</script>

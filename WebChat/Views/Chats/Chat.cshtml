@@ -1,0 +1,35 @@
+﻿ @model ChatViewModel
+ <link rel="stylesheet" href="/css/messages.css"/>
+@{
+    ViewData["Title"] = Model.Title;
+    var _userid = User.FindFirstValue(ClaimTypes.NameIdentifier);
+    var getUserName = (string id) => Model.Users.FirstOrDefault(u => u.Id == id).Name;
+}
+<div id="messageList" class="overflow-auto">
+</div>
+<div class="input-group row">
+    <input class="form-control col-2" type="text" id="messageInput" placeholder="Type there..." />
+    <input class="col-1 btn btn-primary" type="button" id="sendButton" value="Send" />
+    <div class="col-3 btn-group w-auto"> 
+        <input class="w-75" id="copiedChatId" type="text" disabled value="@Model.ChatId"/>
+        <button id="copyButton" onclick="copy()" class="btn btn-secondary">Copy</button>
+    </div>
+</div>
+<script>
+    const chatInfo=@Html.Raw(JsonSerializer.Serialize(Model))
+    const _userId = '@_userid'
+    function copy() {
+        var copyText = document.getElementById("copiedChatId");
+
+        copyText.select();
+        copyText.setSelectionRange(0, 99999);
+
+        navigator.clipboard.writeText(copyText.value);
+
+        alert("Chat id copied");
+    }
+</script>
+@section Scripts{
+<script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
+<script src="~/js/chat.js"></script>
+}
